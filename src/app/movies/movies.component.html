@@ -1,5 +1,14 @@
 <h3>Films</h3>
 
+<mat-form-field>
+    <mat-select placeholder="Films par page">
+        <mat-option [value]="8">8</mat-option>
+        <mat-option [value]="16">16</mat-option>
+        <mat-option [value]="24">24</mat-option>
+        <mat-option [value]="48">48</mat-option>
+      </mat-select>
+  </mat-form-field>
+
 <div id="card-container">
 
       <div *ngFor="let movie of movies" id="movie-container">

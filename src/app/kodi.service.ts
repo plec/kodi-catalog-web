@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Movie } from './model/movie';
 import { MessageService } from './message.service';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {DataService} from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,12 @@ export class KodiService {
   
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private dataService: DataService) { }
 
   getMovies(): Observable<Movie[]> {
-    //this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Movie[]>(this.kodiApiUrl + '/movies/0/10')
+    this.messageService.add('KodiService: fetched movies with ' + this.dataService.getNbElementParPage() + ' movies per pages');
+    return this.http.get<Movie[]>(this.kodiApiUrl + '/movies/0/' + this.dataService.getNbElementParPage())
     .pipe(
       catchError(this.handleError('getMovies', []))
     );
