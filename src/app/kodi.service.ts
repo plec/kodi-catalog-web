@@ -22,10 +22,19 @@ export class KodiService {
     private dataService: DataService) { }
 
   getMovies(): Observable<Movie[]> {
-    this.messageService.add('KodiService: fetched movies with ' + this.dataService.getNbElementParPage() + ' movies per pages');
-    return this.http.get<Movie[]>(this.kodiApiUrl + '/movies/0/' + this.dataService.getNbElementParPage())
+    let index = this.dataService.getNbElementParPage() * this.dataService.getPageIndex();
+    this.messageService.add('KodiService: fetched movies with ' + this.dataService.getNbElementParPage() + ' movies per pages at index ' + index );
+    return this.http.get<Movie[]>(this.kodiApiUrl + '/movies/'+ index
+    +'/' + this.dataService.getNbElementParPage())
     .pipe(
       catchError(this.handleError('getMovies', []))
+    );
+  }
+  getNbMovies(): Observable<number> {
+    this.messageService.add('KodiService: fetched total number of movies');
+    return this.http.get<number>(this.kodiApiUrl + '/movies/count')
+    .pipe(
+      catchError(this.handleError('getNbMovies', 0))
     );
   }
 

@@ -1,13 +1,24 @@
 <h3>Films</h3>
 
-<mat-form-field>
-    <mat-select placeholder="Films par page">
-        <mat-option [value]="8">8</mat-option>
-        <mat-option [value]="16">16</mat-option>
-        <mat-option [value]="24">24</mat-option>
-        <mat-option [value]="48">48</mat-option>
-      </mat-select>
-  </mat-form-field>
+  
+
+    <form>
+      
+      <mat-paginator [length]="length"
+                    [pageSize]="nbElement"
+                    [pageSizeOptions]="[8,16,24,48]"
+                    (page)="pageEvent = $event; changeValueAndUpdate()"
+                    (ngModelChange)="changeValueAndUpdate()">
+      </mat-paginator>
+      
+      <div *ngIf="pageEvent">
+        <h5>Page Change Event Properties</h5>
+        <div>List length: {{pageEvent.length}}</div>
+        <div>Page size: {{pageEvent.pageSize}}</div>
+        <div>Page index: {{pageEvent.pageIndex}}</div>
+      </div>
+
+    </form>
 
 <div id="card-container">
 
