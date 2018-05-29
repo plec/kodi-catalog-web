@@ -1,7 +1,3 @@
-<h3>Films</h3>
-
-  
-
     <form>
       
       <mat-paginator [length]="length"
@@ -11,22 +7,15 @@
                     (ngModelChange)="changeValueAndUpdate()">
       </mat-paginator>
       
-      <div *ngIf="pageEvent">
-        <h5>Page Change Event Properties</h5>
-        <div>List length: {{pageEvent.length}}</div>
-        <div>Page size: {{pageEvent.pageSize}}</div>
-        <div>Page index: {{pageEvent.pageIndex}}</div>
-      </div>
-
     </form>
 
 <div id="card-container">
 
       <div *ngFor="let movie of movies" id="movie-container">
       <mat-card class="movie-card">
-        <mat-card-header>
-          <div mat-card-avatar class="movie-header-image"></div>
-          <mat-card-title>{{movie.titre}}</mat-card-title>
+        <mat-card-header >
+          <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + movie.image + ')'}"></div>
+          <mat-card-title >{{movie.titre}}</mat-card-title>
           <mat-card-subtitle >
           </mat-card-subtitle>
         </mat-card-header>

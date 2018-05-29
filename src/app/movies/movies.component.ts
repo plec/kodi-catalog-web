@@ -24,9 +24,22 @@ export class MoviesComponent implements OnInit {
   constructor(private kodiService: KodiService,
     private messageService: MessageService,
     private dataService: DataService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    if ("/series" === this.router.url) {
+      this.dataService.setKodiMediaType("tvshows");
+    } else {
+      this.dataService.setKodiMediaType("movies");
+    }
+    this.nbElement = this.dataService.getNbElementParPage();
+    this.initPages();
+    this.getMovies();
+  }
+
+  updateKodiMediaType(newData: string) {
+    this.dataService.setKodiMediaType(newData);
     this.nbElement = this.dataService.getNbElementParPage();
     this.initPages();
     this.getMovies();
@@ -41,6 +54,7 @@ export class MoviesComponent implements OnInit {
 
   initPages(): void {
     this.messageService.add("Movie component : call nb of movies");
+    this.dataService.resetPaginationInfo();
     this.kodiService.getNbMovies()
     .subscribe(kodiNbMovies => {
       this.length = kodiNbMovies
