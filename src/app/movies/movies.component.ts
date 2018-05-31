@@ -4,8 +4,9 @@ import {PageEvent} from '@angular/material';
 import { Movie } from '../model/movie';
 import { KodiService } from '../kodi.service';
 import { MessageService } from '../message.service';
-import { DataService } from '../data.service';
+import { PaginationInfoService } from '../paginationInfo.service';
 import { Router } from '@angular/router';
+import { PaginationInfo } from '../model/paginationInfo';
 
 @Component({
   selector: 'app-movies',
@@ -15,67 +16,58 @@ import { Router } from '@angular/router';
 export class MoviesComponent implements OnInit {
 
   movies: Movie[];
+  paginationInfo: PaginationInfo;
+  
   nbElement: number;
   length: number;
   nbPages: number;
-  pageEvent: PageEvent;
   pageIndex: number;
 
+  pageEvent: PageEvent;
+  
   constructor(private kodiService: KodiService,
     private messageService: MessageService,
-    private dataService: DataService,
+    private paginationInfoService: PaginationInfoService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.initPages();
+  }
+
+  private getMediaType() {
+    let mediaType: string 
     if ("/series" === this.router.url) {
-      this.dataService.setKodiMediaType("tvshows");
+      mediaType = "tvshows";
     } else {
-      this.dataService.setKodiMediaType("movies");
+      mediaType = "movies";
     }
-    this.nbElement = this.dataService.getNbElementParPage();
-    this.initPages();
-    this.getMovies();
+    return mediaType;
   }
 
-  updateKodiMediaType(newData: string) {
-    this.dataService.setKodiMediaType(newData);
-    this.nbElement = this.dataService.getNbElementParPage();
-    this.initPages();
-    this.getMovies();
-  }
-
-  getMovies(): void {
+  getKodiMedia(): void {
     this.messageService.add("Movie component : call get movies");
-    this.kodiService.getMovies()
+    this.kodiService.getMovies(this.getMediaType())
     .subscribe(kodiMovies => this.movies = kodiMovies );
-
   }
 
   initPages(): void {
-    this.messageService.add("Movie component : call nb of movies");
-    this.dataService.resetPaginationInfo();
-    this.kodiService.getNbMovies()
+    this.paginationInfoService.resetPaginationInfo();
+    this.nbElement = this.paginationInfoService.getNbElementParPage();
+    this.kodiService.getNbMovies(this.getMediaType())
     .subscribe(kodiNbMovies => {
       this.length = kodiNbMovies
       this.nbPages = this.length / (+this.nbElement);
-      this.messageService.add("length: " + this.length);
     } );
-  }
-
-  changeValueElementParPage() {
-    this.messageService.add(" MenuComponent : changeValueElementParPage by function : " + this.nbElement);
-    this.dataService.setNbElementParPage(this.nbElement);
-    this.nbPages = this.length / (+this.nbElement);
-    this.getMovies();
+    this.getKodiMedia();
   }
 
   changeValueAndUpdate() {
     this.messageService.add(" MenuComponent : changeValueAnd update : ");
-    this.dataService.setNbElementParPage(this.pageEvent.pageSize);
-    this.dataService.setPageIndex(this.pageEvent.pageIndex);
+    this.paginationInfoService.setNbElementParPage(this.pageEvent.pageSize);
+    this.paginationInfoService.setPageIndex(this.pageEvent.pageIndex);
     this.nbPages = this.length / (+this.nbElement);
-    this.getMovies();
+    this.getKodiMedia();
   }
 
 }

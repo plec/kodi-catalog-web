@@ -5,36 +5,33 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Movie } from './model/movie';
 import { MessageService } from './message.service';
-import {DataService} from './data.service';
+import {PaginationInfoService} from './paginationInfo.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KodiService {
-
-//  private kodiApiUrl = 'http://192.168.1.47:8280/api/';  // URL to web api
-
-  private kodiApiUrl = 'http://localhost:8080/api/';  // URL to web api
   
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private dataService: DataService) { }
+    private paginationInfoService: PaginationInfoService) { }
 
-  getMovies(): Observable<Movie[]> {
-    let index = this.dataService.getNbElementParPage() * this.dataService.getPageIndex();
-    this.messageService.add('KodiService: fetched '+this.dataService.getKodiMediaType()+' with ' + this.dataService.getNbElementParPage() + ' media per pages at index ' + index );
-    let serviceUrl = this.kodiApiUrl + '/'+ this.dataService.getKodiMediaType() +'/'+ index
-    +'/' + this.dataService.getNbElementParPage();
+  getMovies(mediaType: string): Observable<Movie[]> {
+    let index = this.paginationInfoService.getNbElementParPage() * this.paginationInfoService.getPageIndex();
+    this.messageService.add('KodiService: fetched '+  mediaType +' with ' + this.paginationInfoService.getNbElementParPage() + ' media per pages at index ' + index );
+    let serviceUrl = environment.kodiApiUrl + '/'+  mediaType +'/'+ index
+    +'/' + this.paginationInfoService.getNbElementParPage();
     this.messageService.add("Call HTTP GET " + serviceUrl);
     return this.http.get<Movie[]>(serviceUrl)
     .pipe(
       catchError(this.handleError('getMovies', []))
     );
   }
-  getNbMovies(): Observable<number> {
+  getNbMovies(mediaType: string): Observable<number> {
     this.messageService.add('KodiService: fetched total number of movies');
-    let serviceUrl = this.kodiApiUrl + '/'+ this.dataService.getKodiMediaType() +'/count';
+    let serviceUrl = environment.kodiApiUrl + '/'+  mediaType +'/count';
     this.messageService.add("Call HTTP GET " + serviceUrl);    
     return this.http.get<number>(serviceUrl)
     .pipe(
