@@ -1,5 +1,7 @@
 # KodiCatalogWeb
 
+[![Build Status](https://travis-ci.org/plec/kodi-catalog-web.svg?branch=master)](https://travis-ci.org/plec/ kodi-catalog-web)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
 
 ## Development server
