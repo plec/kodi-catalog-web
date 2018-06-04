@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/styles-app-loading.scss",
               "src/styles.css",
               "./node_modules/normalize.css/normalize.css"
             ],
