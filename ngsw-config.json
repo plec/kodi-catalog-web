@@ -1,0 +1,49 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "app",
+    "installMode": "prefetch",
+    "resources": {
+      "files": [
+        "/favicon.ico",
+        "/index.html",
+        "/*.css",
+        "/*.js"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**"
+      ]
+    }
+  }, {
+    "name": "image.tmdb.org",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "urls": [
+        "http://image.tmdb.org/**",
+        "https://image.tmdb.org/**"
+      ]
+    }
+  }],
+  "dataGroups": [{
+    "name": "kodi-catalog-api",
+    "urls": [
+      "https://api.pierrotplec.synology.me/api/**",
+      "http://api.pierrotplec.synology.me/api/**"
+    ],
+    "version": 0,
+    "cacheConfig": {
+      "maxSize": 30,
+      "maxAge": "60s",
+      "timeout": "5s",
+      "strategy": "performance"
+    }
+  }]
+
+}
