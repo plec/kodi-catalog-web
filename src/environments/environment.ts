@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  kodiApiUrl: 'http://localhost:8080/api/'
+  kodiApiUrl: 'http://localhost:8080/api/',
+  keycloakUrl: 'https://auth.pierrotplec.synology.me/auth'
 };
-
+// keycloakUrl: 'https://auth.pierrotplec.synology.me/auth'
+// keycloakUrl: 'http://192.168.1.47:8180/auth'
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
