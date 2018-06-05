@@ -1,0 +1,24 @@
+<mat-card class="movie-card">
+  <mat-card-header >
+    <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + show.image + ')'}"></div>
+    <mat-card-title >{{show.titre}}</mat-card-title>
+    <mat-card-subtitle >
+      nb saisons {{show.totalSeasons}}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <div id="img-container">
+    <div id="movie-tags">
+        <mat-chip-list>
+            <mat-chip *ngFor="let tag of show.tags" color="primary" selected="true">{{tag}}</mat-chip>
+          </mat-chip-list>
+    </div>
+    <img mat-card-image src="{{show.image}}" alt="{{show.title}}">
+  </div>
+  <mat-card-content>
+    <p>
+      {{ show.resume }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+  </mat-card-actions>
+</mat-card>

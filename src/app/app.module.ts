@@ -15,13 +15,17 @@ import { MatPaginatorIntlCusto } from './customization/matPaginatorCusto'
 //keycloak
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializer } from './utils/app-init';
+import { ShowDetailComponent } from './show-detail/show-detail.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesComponent,
-    MessagesComponent
+    MessagesComponent,
+    ShowDetailComponent,
+    MovieDetailComponent
     ],
   imports: [
     BrowserModule,

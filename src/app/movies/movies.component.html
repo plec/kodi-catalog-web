@@ -33,7 +33,8 @@
                   <mat-chip *ngFor="let tag of movie.tags" color="primary" selected="true">{{tag}}</mat-chip>
                 </mat-chip-list>
           </div>
-          <img mat-card-image src="{{movie.image}}" alt="{{movie.title}}">
+          <a *ngIf="getMediaType() === 'tvshows'"  routerLink="/show/{{movie.id}}"><img mat-card-image src="{{movie.image}}" alt="{{movie.title}}"></a>
+          <a *ngIf="getMediaType() === 'movies'" routerLink="/movie/{{movie.id}}"><img mat-card-image src="{{movie.image}}" alt="{{movie.title}}"></a>
         </div>
         <mat-card-content>
           <p>

@@ -7,6 +7,7 @@ import { Movie } from './model/movie';
 import { MessageService } from './message.service';
 import {PaginationInfoService} from './paginationInfo.service';
 import { environment } from '../environments/environment';
+import { Show } from './model/show';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,26 @@ export class KodiService {
     .pipe(
       catchError(this.handleError('getNbMovies', 0))
     );
+  }
+  getShow(id: string): Observable<Show> {
+    this.messageService.add('KodiService: fetched tv show');
+    let serviceUrl = environment.kodiApiUrl + '/tvshows/' + id;
+    this.messageService.add("Call HTTP GET " + serviceUrl);    
+    return this.http.get<Show>(serviceUrl)
+    .pipe(
+      catchError(this.handleError('getShow', new Show()))
+    );
+
+  }
+  getMovie(id: string): Observable<Movie> {
+    this.messageService.add('KodiService: fetched movie');
+    let serviceUrl = environment.kodiApiUrl + '/movie/' + id;
+    this.messageService.add("Call HTTP GET " + serviceUrl);    
+    return this.http.get<Movie>(serviceUrl)
+    .pipe(
+      catchError(this.handleError('getMovie', new Movie()))
+    );
+
   }
   getTri() {
     if ("Date" == this.tri || "date" == this.tri || "dateAdded" == this.tri) {
