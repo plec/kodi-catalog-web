@@ -1,6 +1,14 @@
     <form>
       
-      <mat-paginator [length]="length"
+      <mat-form-field>
+        <mat-select placeholder="Tri" [(value)]="Tri" [(ngModel)]="tri" name="tri" (ngModelChange)="changeTri();">
+          <mat-option value="title">Titre</mat-option>
+          <mat-option value="dateAdded">Date</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-paginator
+                    [length]="length"
                     [pageSize]="nbElement"
                     [pageSizeOptions]="[8,16,24,48]"
                     (page)="pageEvent = $event; changeValueAndUpdate()"

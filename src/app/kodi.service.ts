@@ -13,6 +13,8 @@ import { environment } from '../environments/environment';
 })
 export class KodiService {
   
+  tri: string;
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
@@ -22,7 +24,7 @@ export class KodiService {
     let index = this.paginationInfoService.getNbElementParPage() * this.paginationInfoService.getPageIndex();
     this.messageService.add('KodiService: fetched '+  mediaType +' with ' + this.paginationInfoService.getNbElementParPage() + ' media per pages at index ' + index );
     let serviceUrl = environment.kodiApiUrl + '/'+  mediaType +'/'+ index
-    +'/' + this.paginationInfoService.getNbElementParPage();
+    +'/' + this.paginationInfoService.getNbElementParPage() + '/' + this.getTri();
     this.messageService.add("Call HTTP GET " + serviceUrl);
     return this.http.get<Movie[]>(serviceUrl)
     .pipe(
@@ -38,7 +40,16 @@ export class KodiService {
       catchError(this.handleError('getNbMovies', 0))
     );
   }
-
+  getTri() {
+    if ("Date" == this.tri || "date" == this.tri || "dateAdded" == this.tri) {
+      return "dateAdded";
+    } else {
+      return "title";
+    }
+  }
+  setTri(newTri: string) {
+    this.tri = newTri;
+  }
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add('MovieService: ' + message);

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule} from '@angular/common/http'
-import { MatToolbarModule, MatIconModule, MatGridListModule, MatCardModule, MatChipsModule, MatSelectModule, MatPaginatorModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatGridListModule, MatCardModule, MatChipsModule, MatSelectModule, MatPaginatorModule, MatPaginatorIntl, MatSidenavModule, MatListModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppComponent } from './app.component';
@@ -11,7 +11,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import { MatPaginatorIntlCusto } from './customization/matPaginatorCusto'
 //keycloak
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializer } from './utils/app-init';
@@ -47,7 +47,7 @@ import { initializer } from './utils/app-init';
     useFactory: initializer,
     multi: true,
     deps: [KeycloakService]
-  }],
+  },{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCusto}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

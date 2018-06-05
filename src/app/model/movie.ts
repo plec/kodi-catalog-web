@@ -4,4 +4,5 @@ export class Movie {
     image: string;
     tags: string[];
     titre_original: string;
+    id: string
   }

@@ -17,6 +17,7 @@ export class MoviesComponent implements OnInit {
 
   movies: Movie[];
   paginationInfo: PaginationInfo;
+  tri: string;
   
   nbElement: number;
   length: number;
@@ -51,7 +52,15 @@ export class MoviesComponent implements OnInit {
     .subscribe(kodiMovies => this.movies = kodiMovies );
   }
 
+  changeTri(): void {
+    this.kodiService.setTri(this.tri);
+    this.getKodiMedia();
+  }
+
   initPages(): void {
+    this.tri = "title"
+    console.log("tri : " + this.tri)
+    this.kodiService.setTri("title");
     this.paginationInfoService.resetPaginationInfo();
     this.nbElement = this.paginationInfoService.getNbElementParPage();
     this.kodiService.getNbMovies(this.getMediaType())

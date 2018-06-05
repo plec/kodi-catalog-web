@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   kodiApiUrl: 'http://localhost:8080/api/',
-  keycloakUrl: 'https://auth.pierrotplec.synology.me/auth'
+  keycloakUrl: 'http://192.168.1.47:8180/auth'
 };
 // keycloakUrl: 'https://auth.pierrotplec.synology.me/auth'
 // keycloakUrl: 'http://192.168.1.47:8180/auth'
