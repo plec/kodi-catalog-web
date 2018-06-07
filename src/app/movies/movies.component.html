@@ -7,9 +7,22 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field>
+        <mat-select placeholder="Genre" [(value)]="Genre" [(ngModel)]="selectedGenre" name="selectedGenre" (ngModelChange)="changeGenre();">
+          <mat-option *ngFor="let genre of genres" [value]="genre.value">
+            {{ genre.value }}
+          </mat-option>        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Titre" value="" [(ngModel)]="selectedTitle" name="selectedTitle" >
+      </mat-form-field>
+      <button mat-button (click)="changeTitle();">Actualiser</button>
+
       <mat-paginator
                     [length]="length"
                     [pageSize]="nbElement"
+                    [pageIndex]="pageIndex"
                     [pageSizeOptions]="[8,16,24,48]"
                     (page)="pageEvent = $event; changeValueAndUpdate()"
                     (ngModelChange)="changeValueAndUpdate()">

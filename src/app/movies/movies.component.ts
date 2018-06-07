@@ -16,8 +16,10 @@ import { PaginationInfo } from '../model/paginationInfo';
 export class MoviesComponent implements OnInit {
 
   movies: Movie[];
-  paginationInfo: PaginationInfo;
+  genres: string[];
   tri: string;
+  selectedGenre: string;
+  selectedTitle: string;
   
   nbElement: number;
   length: number;
@@ -48,7 +50,7 @@ export class MoviesComponent implements OnInit {
 
   getKodiMedia(): void {
     this.messageService.add("Movie component : call get movies");
-    this.kodiService.getMovies(this.getMediaType())
+    this.kodiService.getMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle)
     .subscribe(kodiMovies => this.movies = kodiMovies );
   }
 
@@ -56,19 +58,37 @@ export class MoviesComponent implements OnInit {
     this.kodiService.setTri(this.tri);
     this.getKodiMedia();
   }
+  changeGenre(): void {
+    this.initPages();
+  }
+  changeTitle(): void {
+    this.initPages();
+
+  }
 
   initPages(): void {
-    this.tri = "title"
-    console.log("tri : " + this.tri)
-    this.kodiService.setTri("title");
-    this.paginationInfoService.resetPaginationInfo();
-    this.nbElement = this.paginationInfoService.getNbElementParPage();
-    this.kodiService.getNbMovies(this.getMediaType())
+    console.log("need init : " + this.kodiService.needReset());
+    if (this.kodiService.needReset()) {
+      this.tri = "title";
+      this.kodiService.setTri(this.tri);
+      this.paginationInfoService.resetPaginationInfo();
+      this.nbElement = this.paginationInfoService.getNbElementParPage();
+      this.pageIndex = 0;
+    } else {
+      this.nbElement = this.paginationInfoService.getNbElementParPage();
+      this.pageIndex = this.paginationInfoService.getPageIndex();
+    }
+    this.kodiService.getGenres(this.getMediaType()).subscribe(genres => {
+      this.genres = genres;
+    });
+    this.kodiService.getNbMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle)
     .subscribe(kodiNbMovies => {
       this.length = kodiNbMovies
       this.nbPages = this.length / (+this.nbElement);
     } );
-    this.getKodiMedia();
+  this.getKodiMedia();
+  //set init to true for next init page
+  this.kodiService.setInit("O");
   }
 
   changeValueAndUpdate() {

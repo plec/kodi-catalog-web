@@ -16,29 +16,58 @@ export class KodiService {
   
   tri: string;
 
+  init: string;
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
     private paginationInfoService: PaginationInfoService) { }
 
-  getMovies(mediaType: string): Observable<Movie[]> {
+  getMovies(mediaType: string, genre: string, titre: string): Observable<Movie[]> {
     let index = this.paginationInfoService.getNbElementParPage() * this.paginationInfoService.getPageIndex();
     this.messageService.add('KodiService: fetched '+  mediaType +' with ' + this.paginationInfoService.getNbElementParPage() + ' media per pages at index ' + index );
-    let serviceUrl = environment.kodiApiUrl + '/'+  mediaType +'/'+ index
-    +'/' + this.paginationInfoService.getNbElementParPage() + '/' + this.getTri();
+    let serviceUrl = environment.kodiApiUrl
+      + '/' +  mediaType;
+    if (genre && genre != "") {
+      serviceUrl += '/genre/'+ genre;
+    }
+    if (titre && titre != "") {
+      serviceUrl += '/title/'+ titre;
+    }
+    serviceUrl += '/'+ index
+      +'/' + this.paginationInfoService.getNbElementParPage()
+      + '/' + this.getTri();
+      console.log("call getMovies " + serviceUrl);
     this.messageService.add("Call HTTP GET " + serviceUrl);
     return this.http.get<Movie[]>(serviceUrl)
     .pipe(
       catchError(this.handleError('getMovies', []))
     );
   }
-  getNbMovies(mediaType: string): Observable<number> {
+  getNbMovies(mediaType: string, genre: string, titre: string): Observable<number> {
     this.messageService.add('KodiService: fetched total number of movies');
-    let serviceUrl = environment.kodiApiUrl + '/'+  mediaType +'/count';
-    this.messageService.add("Call HTTP GET " + serviceUrl);    
+    let serviceUrl = environment.kodiApiUrl
+      + '/'+  mediaType
+      +'/count';
+    if (genre && genre != "") {
+     serviceUrl += '/genre/'+ genre;
+    }
+    if (titre && titre != "") {
+      serviceUrl += '/title/'+ titre;
+     }
+     this.messageService.add("Call HTTP GET " + serviceUrl);    
     return this.http.get<number>(serviceUrl)
     .pipe(
       catchError(this.handleError('getNbMovies', 0))
+    );
+  }
+  getGenres(mediaType: string): Observable<string[]> {
+    this.messageService.add('KodiService: fetched genres '+  mediaType );
+    let serviceUrl = environment.kodiApiUrl + '/genres';
+    this.messageService.add("Call HTTP GET " + serviceUrl);
+    return this.http.get<string[]>(serviceUrl)
+    .pipe(
+      catchError(this.handleError('getGenre', []))
     );
   }
   getShow(id: string): Observable<Show> {
@@ -74,6 +103,15 @@ export class KodiService {
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add('MovieService: ' + message);
+  }
+  needReset() :boolean {
+    if ("N" == this.init) {
+      return false;
+    }
+    return true;
+  }
+  setInit(newData: string) {
+    this.init = newData;
   }
   /**
    * Handle Http operation that failed.

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule} from '@angular/common/http'
-import { MatToolbarModule, MatIconModule, MatGridListModule, MatCardModule, MatChipsModule, MatSelectModule, MatPaginatorModule, MatPaginatorIntl, MatSidenavModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatGridListModule, MatCardModule, MatChipsModule, MatSelectModule, MatPaginatorModule, MatPaginatorIntl, MatSidenavModule, MatListModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppComponent } from './app.component';
@@ -41,6 +41,8 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
     MatPaginatorModule,
     MatSidenavModule,
     MatListModule,
+    MatInputModule,
+    MatButtonModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

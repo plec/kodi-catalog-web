@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Movie } from '../model/movie';
 import { KodiService } from '../kodi.service';
@@ -16,7 +16,8 @@ export class MovieDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private kodiService: KodiService,
-    private location: Location) { }
+    private location: Location,
+    private router: Router) { }
 
   ngOnInit() {
     this.getMovie();
@@ -30,7 +31,8 @@ export class MovieDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.kodiService.setInit("N");
+    this.router.navigate(['/films']);
   }
 
 
