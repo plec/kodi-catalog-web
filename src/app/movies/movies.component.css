@@ -1,5 +1,5 @@
 /* DashboardComponent's private CSS styles */
-[class*='col-'] {
+/*[class*='col-'] {
     float: left;
     padding-right: 20px;
     padding-bottom: 20px;
@@ -59,7 +59,8 @@
     .module {
       min-width: 60px;
     }
-  }
+  }*/
+
   .movie-card {
     max-width: 300px;
     max-height: 800px;
@@ -90,7 +91,15 @@
 }
 .mat-card-image {
   width: calc(100% + 40px);
+  margin-top: 3px;
+  margin-left: 2px;
  }
+ .mat-card-image:first-child {
+  margin-top: 3px;
+ }
+ .mat-card-content>:first-child {
+  margin-top:10px;   
+ } 
 .mat-card-content {
   margin-top: 3px;
 }

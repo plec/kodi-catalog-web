@@ -37,7 +37,7 @@
           <a *ngIf="getMediaType() === 'movies'" routerLink="/movie/{{movie.id}}"><img mat-card-image src="{{movie.image}}" alt="{{movie.title}}"></a>
         </div>
         <mat-card-content>
-          <p>
+          <p class="resume">
             {{ (movie.resume.length>200)? (movie.resume | slice:0:200)+'..':(movie.resume) }}
           </p>
         </mat-card-content>
