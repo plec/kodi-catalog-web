@@ -1,25 +1,56 @@
-<mat-card class="movie-card">
-  <mat-card-header >
-    <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + show.image + ')'}"></div>
-    <mat-card-title >{{show.titre}}</mat-card-title>
-    <mat-card-subtitle >
-      nb saisons {{show.totalSeasons}}
-    </mat-card-subtitle>
-  </mat-card-header>
-  <div id="img-container">
-    <div id="movie-tags">
-        <mat-chip-list>
-            <mat-chip *ngFor="let tag of show.tags" color="primary" selected="true">{{tag}}</mat-chip>
-          </mat-chip-list>
+<div id="tvshow-detail">
+    <button mat-button (click)="goBack()">Retour à la liste</button>
+    <div id="card-container">
+    <div id="movie-container">
+      <mat-card class="movie-card">
+        <mat-card-header  *ngIf="show">
+            <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + show.image + ')'}"></div>
+            <mat-card-title >{{show.titre}}</mat-card-title>
+          <mat-card-subtitle >
+            nb saisons {{show.totalSeasons}}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div id="img-container">
+                <div id="movie-tags">
+                    <mat-chip-list *ngIf="show">
+                        <mat-chip *ngFor="let tag of show.tags" color="primary" selected="true">{{tag}}</mat-chip>
+                      </mat-chip-list>
+                </div>
+          
+                <img *ngIf="show" mat-card-image src="{{show.image}}" alt="{{show.title}}">
+              </div>
+          <p *ngIf="show">
+            {{ show.resume }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          </mat-card-actions>
+      </mat-card>
     </div>
-    <img mat-card-image src="{{show.image}}" alt="{{show.title}}">
+    <div id="movie-container">
+    <mat-card class="movie-card">
+        <mat-card-header  *ngIf="show">
+            <form>
+                <mat-form-field>
+                    <mat-select placeholder="Saisons" [(ngModel)]="selectedSaison" name="selectedSaison" (ngModelChange)="changeSaison();">
+                      <mat-option *ngFor="let saison of seasons" [value]="saison">
+                        {{ saison }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+          </form>
+              <mat-card-subtitle >
+            <p>nb saisons {{show.totalSeasons}}</p>
+            <p>nb total épisodes {{show.totalEpisodes}}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="selectedSaison">
+              <p *ngFor="let episode of episodes">{{episode.episode}} - {{episode.title}} </p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-  <mat-card-content>
-    <p>
-      {{ show.resume }}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-  </mat-card-actions>
-</mat-card>
-<button (click)="goBack()">go back</button>
+</div>

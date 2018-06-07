@@ -4,6 +4,9 @@ export class Show {
     image: string;
     tags: string[];
     titre_original: string;
-    id: string
+    id: string;
     totalSeasons: number;
+    episodes:{};
+    seasons: string[];
+    totalEpisodes: number;
   }

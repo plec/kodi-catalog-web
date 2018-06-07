@@ -1,3 +1,4 @@
+<button mat-button (click)="goBack()">Retour à la liste</button>
 <mat-card class="movie-card">
   <mat-card-header *ngIf="movie">
     <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + movie.image + ')'}"></div>
@@ -27,4 +28,3 @@
   <mat-card-actions>
   </mat-card-actions>
 </mat-card>
-<button (click)="goBack()">go back</button>

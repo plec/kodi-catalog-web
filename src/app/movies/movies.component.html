@@ -9,9 +9,13 @@
 
       <mat-form-field>
         <mat-select placeholder="Genre" [(value)]="Genre" [(ngModel)]="selectedGenre" name="selectedGenre" (ngModelChange)="changeGenre();">
-          <mat-option *ngFor="let genre of genres" [value]="genre.value">
+            <mat-option [value]="">
+                Tous
+              </mat-option>
+              <mat-option *ngFor="let genre of genres" [value]="genre.value">
             {{ genre.value }}
-          </mat-option>        </mat-select>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field>
