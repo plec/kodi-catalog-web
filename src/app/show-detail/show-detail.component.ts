@@ -28,4 +28,8 @@ export class ShowDetailComponent implements OnInit {
       .subscribe(show => this.show = show);
   }
 
+  goBack(): void {
+    this.location.back();
+  }
+
 }
