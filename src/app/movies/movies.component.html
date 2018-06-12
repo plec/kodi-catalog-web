@@ -1,14 +1,14 @@
     <form>
       
       <mat-form-field>
-        <mat-select placeholder="Tri" [(value)]="Tri" [(ngModel)]="tri" name="tri" (ngModelChange)="changeTri();">
+        <mat-select placeholder="Tri" [(ngModel)]="tri" name="tri" (ngModelChange)="changeTri();">
           <mat-option value="title">Titre</mat-option>
           <mat-option value="dateAdded">Date</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="Genre" [(value)]="Genre" [(ngModel)]="selectedGenre" name="selectedGenre" (ngModelChange)="changeGenre();">
+        <mat-select placeholder="Genre" [(ngModel)]="selectedGenre" name="selectedGenre" (ngModelChange)="changeGenre();">
             <mat-option [value]="">
                 Tous
               </mat-option>
@@ -58,8 +58,6 @@
             {{ (movie.resume.length>200)? (movie.resume | slice:0:200)+'..':(movie.resume) }}
           </p>
         </mat-card-content>
-        <mat-card-actions>
-        </mat-card-actions>
       </mat-card>
 
     </div>

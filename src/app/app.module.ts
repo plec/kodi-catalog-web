@@ -12,12 +12,13 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MatPaginatorIntlCusto } from './customization/matPaginatorCusto'
+import { ShowDetailComponent } from './show-detail/show-detail.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+
 
 //keycloak
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializer } from './utils/app-init';
-import { ShowDetailComponent } from './show-detail/show-detail.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 
 @NgModule({
