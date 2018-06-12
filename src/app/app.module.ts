@@ -20,6 +20,7 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializer } from './utils/app-init';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ChromecastComponent } from './chromecast/chromecast.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -31,7 +32,8 @@ export function tokenGetter() {
     MoviesComponent,
     MessagesComponent,
     ShowDetailComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    ChromecastComponent
     ],
   imports: [
     BrowserModule,

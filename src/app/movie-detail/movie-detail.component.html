@@ -1,4 +1,5 @@
 <button mat-button (click)="goBack()">Retour à la liste</button>
+<button mat-button (click)="play()">Lecture</button>
 <mat-card class="movie-card">
   <mat-card-header *ngIf="movie">
     <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + movie.image + ')'}"></div>
@@ -26,3 +27,4 @@
     </p>
   </mat-card-content>
 </mat-card>
+<ng-cast></ng-cast>
