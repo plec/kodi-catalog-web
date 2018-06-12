@@ -19,7 +19,11 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 //keycloak
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { initializer } from './utils/app-init';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -48,7 +52,14 @@ import { initializer } from './utils/app-init';
     FormsModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['*', 'localhost:8080', 'api.pierrotplec.synology.me', 'api.pierrotplec.local'],
+        blacklistedRoutes: ['image.tmdb.org']
+      }
+    })
   ],
   providers: [{
     provide: APP_INITIALIZER,
