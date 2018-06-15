@@ -13,6 +13,8 @@ export class MovieDetailComponent implements OnInit {
 
   @Input() movie: Movie;
 
+  castingStatus: Object;
+
 
   constructor(private route: ActivatedRoute,
     private kodiService: KodiService,
@@ -22,6 +24,20 @@ export class MovieDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getMovie();
+
+    let script = window['document'].createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    script.setAttribute('src', 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1');
+    window['document'].body.appendChild(script);
+
+    let chromecastService = this.chromecastService;
+    window['__onGCastApiAvailable'] = function (isAvailable) {
+      if (isAvailable) {
+        chromecastService.initializeCastApi();
+      }
+    };
+
+    this.castingStatus = this.chromecastService.getStatus();
   }
 
   getMovie(): void {
@@ -39,6 +55,15 @@ export class MovieDetailComponent implements OnInit {
     this.kodiService.setInit("N");
     this.router.navigate(['/films']);
   }
+
+  openSession() {
+    this.chromecastService.discoverDevices();
+  }
+
+  closeSession() {
+    this.chromecastService.stop();
+  }
+
 
 
 }

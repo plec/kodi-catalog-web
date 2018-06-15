@@ -1,5 +1,9 @@
 <button mat-button (click)="goBack()">Retour à la liste</button>
+<div *ngIf="movie.strPath.endsWith('.mp4') || movie.strPath.endsWith('.avi')">
 <button mat-button (click)="play()">Lecture</button>
+<i *ngIf="!castingStatus.casting" class="material-icons" (click)="openSession()">cast</i>
+<i *ngIf="castingStatus.casting" class="material-icons" (click)="openSession()">cast_connected</i>
+</div>
 <mat-card class="movie-card">
   <mat-card-header *ngIf="movie">
     <div mat-card-avatar class="movie-header-image" [ngStyle]="{'background-image': 'url(' + movie.image + ')'}"></div>
@@ -27,4 +31,3 @@
     </p>
   </mat-card-content>
 </mat-card>
-<ng-cast></ng-cast>
