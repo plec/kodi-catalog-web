@@ -15,6 +15,7 @@ import { Show } from './model/show';
 export class KodiService {
   
   tri: string;
+  format: string;
 
   init: string;
 
@@ -23,7 +24,7 @@ export class KodiService {
     private messageService: MessageService,
     private paginationInfoService: PaginationInfoService) { }
 
-  getMovies(mediaType: string, genre: string, titre: string): Observable<Movie[]> {
+  getMovies(mediaType: string, genre: string, titre: string, format: string): Observable<Movie[]> {
     let index = this.paginationInfoService.getNbElementParPage() * this.paginationInfoService.getPageIndex();
     this.messageService.add('KodiService: fetched '+  mediaType +' with ' + this.paginationInfoService.getNbElementParPage() + ' media per pages at index ' + index );
     let serviceUrl = environment.kodiApiUrl
@@ -33,6 +34,9 @@ export class KodiService {
     }
     if (titre && titre != "") {
       serviceUrl += '/title/'+ titre;
+    }
+    if (format && format != "") {
+      serviceUrl += '/format/'+ format;
     }
     serviceUrl += '/'+ index
       +'/' + this.paginationInfoService.getNbElementParPage()
@@ -44,7 +48,7 @@ export class KodiService {
       catchError(this.handleError('getMovies', []))
     );
   }
-  getNbMovies(mediaType: string, genre: string, titre: string): Observable<number> {
+  getNbMovies(mediaType: string, genre: string, titre: string, format: string): Observable<number> {
     this.messageService.add('KodiService: fetched total number of movies');
     let serviceUrl = environment.kodiApiUrl
       + '/'+  mediaType
@@ -55,7 +59,10 @@ export class KodiService {
     if (titre && titre != "") {
       serviceUrl += '/title/'+ titre;
      }
-     this.messageService.add("Call HTTP GET " + serviceUrl);    
+     if (format && format != "") {
+      serviceUrl += '/format/'+ format;
+     }
+      this.messageService.add("Call HTTP GET " + serviceUrl);    
     return this.http.get<number>(serviceUrl)
     .pipe(
       catchError(this.handleError('getNbMovies', 0))

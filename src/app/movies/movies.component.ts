@@ -16,10 +16,13 @@ import { PaginationInfo } from '../model/paginationInfo';
 export class MoviesComponent implements OnInit {
 
   movies: Movie[];
+  formats: string[];
   genres: string[];
   tri: string;
+  selectedFormat: string;
   selectedGenre: string;
   selectedTitle: string;
+
   
   nbElement: number;
   length: number;
@@ -32,7 +35,9 @@ export class MoviesComponent implements OnInit {
     private messageService: MessageService,
     private paginationInfoService: PaginationInfoService,
     private router: Router
-  ) { }
+  ) { 
+    this.formats = ["mkv","avi","mp4"]
+  }
 
   ngOnInit() {
     this.initPages();
@@ -49,8 +54,8 @@ export class MoviesComponent implements OnInit {
   }
 
   getKodiMedia(): void {
-    this.messageService.add("Movie component : call get movies");
-    this.kodiService.getMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle)
+    this.messageService.add("Movie component : call get movies with format " + this.selectedFormat);
+    this.kodiService.getMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle, this.selectedFormat)
     .subscribe(kodiMovies => this.movies = kodiMovies );
   }
 
@@ -59,6 +64,9 @@ export class MoviesComponent implements OnInit {
     this.getKodiMedia();
   }
   changeGenre(): void {
+    this.initPages();
+  }
+  changeFormat(): void {
     this.initPages();
   }
   changeTitle(): void {
@@ -81,7 +89,8 @@ export class MoviesComponent implements OnInit {
     this.kodiService.getGenres(this.getMediaType()).subscribe(genres => {
       this.genres = genres;
     });
-    this.kodiService.getNbMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle)
+    console.log("call getNbMovies with values : type:"+this.getMediaType() + " genre: " + this.selectedGenre + " title: " + this.selectedTitle + " format: "+this.selectedFormat);
+    this.kodiService.getNbMovies(this.getMediaType(), this.selectedGenre, this.selectedTitle, this.selectedFormat)
     .subscribe(kodiNbMovies => {
       this.length = kodiNbMovies
       this.nbPages = this.length / (+this.nbElement);
