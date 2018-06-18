@@ -43,7 +43,7 @@ export class MoviesComponent implements OnInit {
     this.initPages();
   }
 
-  private getMediaType() {
+  public getMediaType() {
     let mediaType: string 
     if ("/series" === this.router.url) {
       mediaType = "tvshows";

@@ -17,8 +17,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field>
+      <mat-form-field *ngIf="getMediaType() == 'movies'">
         <mat-select placeholder="format video" [(ngModel)]="selectedFormat" name="selectedFormat" (ngModelChange)="changeFormat();">
           <mat-option [value]="">Tous</mat-option>
           <mat-option *ngFor="let format of formats" [value]="format">
